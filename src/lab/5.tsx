@@ -1,72 +1,99 @@
-import { Button, Form, Input, Select } from "antd"
+import { useMutation, useQuery } from "@tanstack/react-query";
+import { Button, Form, Input, message, Select } from "antd";
 import axios from "axios";
-import { useMutation } from "@tanstack/react-query";
-import toast from "react-hot-toast";
 
-const CATEGORY_OPTIONS = [
-    { value: "Technology", label: "Technology" },
-    { value: "Education", label: "Education" },
-    { value: "Sports", label: "Sports" },
-    { value: "Entertainment", label: "Entertainment" },
-];
+interface StoryForm {
+    title: string;
+    description?: string;
+    image?: string;
+    categoryId: string | number;
+    active?: boolean;
+}
+
+interface Category {
+    id: string | number;
+    title: string;
+}
 
 function Lab5() {
-    const { mutate } = useMutation({
-        mutationFn: async (data: any) => {
-            await axios.post("http://localhost:3000/stories", data)
+    const { data: categories, isLoading: isCategoriesLoading } = useQuery<Category[]>({
+        queryKey: ["categories"],
+        queryFn: async () => {
+            const response = await axios.get("http://localhost:3000/categories");
+            return response.data;
+        }
+    });
+
+    const { mutate, isPending } = useMutation({
+        mutationFn: async (data: StoryForm) => {
+            await axios.post("http://localhost:3000/stories", data);
         },
         onSuccess: () => {
-            toast.success("Thêm thành công")
+            message.success("Them thanh cong");
         },
         onError: () => {
-            toast.error("Thêm thất bại")
-        }
-    })
-    const onFinish = (values: any) => {
+            message.error("Them that bai");
+        },
+    });
+
+    const onFinish = (values: StoryForm) => {
         console.log(values);
         mutate(values);
     };
+
+    const categoryOptions = categories?.map((category) => ({
+        value: category.id,
+        label: category.title,
+    })) || [];
+
     return (
         <div>
             <h2>Lab5</h2>
-            <Form onFinish={onFinish} layout="vertical">
+            <Form onFinish={onFinish}>
                 <Form.Item
-                    label="title"
-                    name="title" rules={[
+                    label="Title"
+                    name="title"
+                    rules={[
                         { required: true },
-                        {
-                            min: 3,
-                        },
+                        { min: 3 },
                     ]}>
-                    <Input />
-                </Form.Item>
-                <Form.Item label="Tác giả" name="author">
-                    <Input />
+                    <Input disabled={isPending} />
                 </Form.Item>
 
-                <Form.Item label="Image URL" name="cover">
-                    <Input />
-                </Form.Item>
-
-                <Form.Item label="Mô tả" name="description">
-                    <Input.TextArea rows={4} />
-                </Form.Item>
                 <Form.Item
-                    label="Danh mục"
-                    name="category"
-                    rules={[{ required: true, message: "Vui lòng chọn danh mục!" }]}
+                    label="Description"
+                    name="description"
+                >
+                    <Input disabled={isPending} />
+                </Form.Item>
+
+                <Form.Item
+                    label="Image"
+                    name="image"
+                >
+                    <Input disabled={isPending} />
+                </Form.Item>
+
+                <Form.Item
+                    label="Category"
+                    name="categoryId"
+                    rules={[{ required: true, message: "chọn danh mục" }]}
                 >
                     <Select
                         placeholder="Chọn danh mục"
-                        options={CATEGORY_OPTIONS}
-                        showSearch // Cho phép tìm kiếm nhanh danh mục khi gõ chữ
-                        filterOption={(input, option) =>
-                            (option?.label ?? '').toLowerCase().includes(input.toLowerCase())
-                        }
+                        loading={isCategoriesLoading}
+                        disabled={isPending || isCategoriesLoading}
+                        options={categoryOptions}
                     />
                 </Form.Item>
 
-                <Button htmlType="submit">Submit</Button>
+                <Form.Item
+                    label="Active"
+                    name="active"
+                >
+                    <Input disabled={isPending} />
+                </Form.Item>
+                <Button htmlType="submit" disabled={isPending}>Submit</Button>
             </Form>
         </div>
     );
