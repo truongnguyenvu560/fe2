@@ -121,6 +121,7 @@ const StoryList = () => {
   const filteredData = data?.filter((item: Story) =>
     item.title?.toLowerCase().includes(keyword.toLowerCase())
   );
+  
 
   return (
     <div>
