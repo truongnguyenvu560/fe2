@@ -1,0 +1,11 @@
+{
+  "stories": [
+    {
+      "title": "Naruto",
+      "author": "Masashi Kishimoto",
+      "cover": "https://image.com/naruto.jpg",
+      "description": "Truyện hải tặc",
+      "category": "Action"
+    }
+  ]
+}
