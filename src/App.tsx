@@ -5,8 +5,8 @@ import Lab1 from "./lab/1";
 import Lab2 from "./lab/2";
 import Lab3 from './lab/3';
 import Lab4 from './lab/4';
-import Lab5 from './lab/5';
-import Lab6 from './lab/6'
+import Lab5 from './lab/5'
+// import Lab6 from './lab/6'
 
 
 
@@ -36,9 +36,9 @@ function App() {
             <Link to="/lab5" className="hover:text-gray-200">
               lab5
             </Link>
-            <Link to="/lab6" className="hover:text-gray-200">
+            {/* <Link to="/lab6" className="hover:text-gray-200">
               lab6
-            </Link>
+            </Link> */}
           </div>
 
           <div className="hidden md:flex items-center space-x-6">
@@ -66,7 +66,7 @@ function App() {
         <Route path="/lab3" element={<Lab3 />} />
         <Route path="/lab4" element={<Lab4 />} />
         <Route path="/lab5" element={<Lab5 />} />
-        <Route path="/lab6" element={<Lab6 />} />
+        {/* <Route path="/lab6" element={<Lab6 />} /> */}
       </Routes>
       <Toaster />
     </>

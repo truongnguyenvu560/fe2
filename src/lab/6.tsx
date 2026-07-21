@@ -1,16 +1,36 @@
-import { Button, Form, Input } from "antd";
-import { useParams } from "react-router-dom";
-import { useQuery } from "@tanstack/react-query";
-import { useEffect } from "react";
+// import { Form, Input, Button, Spin } from "antd";
+// import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
+// import axios from "axios";
+// import { useParams, useNavigate } from "react-router-dom";
+// import { useEffect } from "react";
 
-function Lab6() {
-    const {id} = useParams();
-    const {data} = useQuery({
-        queryKey: [],
-        queryFn: () => {},
-    });
-useEffect(() => {
-    
-})
-}
-export default Lab6;
+// const Lab6 = () => {
+//     const onFinish = () => {
+
+//     }
+
+// return (
+//     <Form form={form} layout="vertical" onFinish={onFinish}>
+//       <Form.Item name="title" label="Tên truyện">
+//         <Input />
+//       </Form.Item>
+
+//       <Form.Item name="author" label="Tác giả">
+//         <Input />
+//       </Form.Item>
+
+//       <Form.Item name="image" label="Ảnh">
+//         <Input />
+//       </Form.Item>
+
+//       <Form.Item name="description" label="Mô tả">
+//         <Input.TextArea />
+//       </Form.Item>
+
+//       <Button type="primary" htmlType="submit">
+//         Cập nhật
+//       </Button>
+//     </Form>
+//     )
+// }
+// export default Lab6;
